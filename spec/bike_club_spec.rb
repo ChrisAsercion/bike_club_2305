@@ -33,9 +33,22 @@ RSpec.describe 'Bike_Club' do
     biker.log_ride(ride1, 92.5)
     biker.log_ride(ride1, 91.1)
     biker2.log_ride(ride2, 65.0)
+    require 'pry'; binding.pry
     club1.ride_counter
     expect(club1.top_rider.name).to eq("Kenny")
   end 
-
   #top_rider is the variable name for the rider with the most logged rides in a club
+
+  it 'can tell the rider if the ride is doable' do
+    club1 = Bike_Club.new("Spokes for Folks")
+    biker = Biker.new("Kuzan", 30)
+    biker.learn_terrain!(:hills)
+    club1.add_biker(biker)
+    ride1 = Ride.new({name: "Walnut Creek Trail", distance: 10.7,
+    loop: false, terrain: :hills})
+    ride2 = Ride.new({name: "Town Lake", distance: 14.9,
+    loop: true, terrain: :gravel})
+    #require 'pry'; binding.pry
+    expect(club1.ride_eligibility(biker, ride1)).to eq("This is a doable ride. The terrain is acceptable, and the total distance is within reason")
+  end
 end
