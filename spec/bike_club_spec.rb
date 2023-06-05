@@ -33,7 +33,6 @@ RSpec.describe 'Bike_Club' do
     biker.log_ride(ride1, 92.5)
     biker.log_ride(ride1, 91.1)
     biker2.log_ride(ride2, 65.0)
-    require 'pry'; binding.pry
     club1.ride_counter
     expect(club1.top_rider.name).to eq("Kenny")
   end 
@@ -48,7 +47,13 @@ RSpec.describe 'Bike_Club' do
     loop: false, terrain: :hills})
     ride2 = Ride.new({name: "Town Lake", distance: 14.9,
     loop: true, terrain: :gravel})
-    #require 'pry'; binding.pry
     expect(club1.ride_eligibility(biker, ride1)).to eq("This is a doable ride. The terrain is acceptable, and the total distance is within reason")
+    biker2 = Biker.new("Athena", 15)
+    club1.add_biker(biker2)
+    biker2.learn_terrain!(:hills)
+    expect(club1.ride_eligibility(biker2, ride1)).to eq("This ride maybe to long for you at this moment")
+    ride3 = Ride.new({name: "Punk Hazard", distance: 15,
+    loop: true, terrain: :ice})
+    expect(club1.ride_eligibility(biker, ride3)).to eq("Your bike may not be suited for this terrain")
   end
 end
