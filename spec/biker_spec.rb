@@ -31,6 +31,7 @@ RSpec.describe 'Biker' do
     biker.log_ride(ride1, 91.1)
     biker.log_ride(ride2, 60.9)
     biker.log_ride(ride2, 61.6)
+    require 'pry'; binding.pry
     expect(biker.rides[ride1]).to eq([92.5, 91.1])
     expect(biker.rides[ride2]).to eq([60.9, 61.6])
   end
@@ -61,8 +62,9 @@ RSpec.describe 'Biker' do
     biker2.learn_terrain!(:gravel)
     biker2.log_ride(ride1, 95.0)
     biker2.log_ride(ride2, 65.0)
-    #require 'pry'; binding.pry
+    require 'pry'; binding.pry
     expect(biker2.personal_record(ride1)).to eq(false)
     expect(biker2.personal_record(ride2)).to eq(65.0)
   end
+
 end
